@@ -6,9 +6,25 @@ const remainingGuessesElement = document.querySelector (".remaining");
 const countdown = document.querySelector (".remaining span");
 const message = document.querySelector (".message");
 const buttonPlayAgain = document.querySelector (".play-again");
-const word = "magnolia";
+let word = "magnolia";
 const allGuesses = [];
 let remainingGuesses = 8;
+
+// to fetch random new word
+const getWord = async function() {
+    const res = await fetch (
+        "https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt" 
+    );
+    const words = await res.text();
+    // console.log(words);
+    const wordArray = words.split("\n");
+    console.log(wordArray);
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    word = wordArray[randomIndex].trim();
+    
+    placeholder (word);
+};
+getWord();
 
 // placeholder for mystery word
 const placeholder = function (word) {
@@ -19,7 +35,7 @@ const placeholder = function (word) {
     }
     currentWord.innerText = placeholderLetters.join("");
 };
-placeholder (word);
+
 
 // event listener to clear the guess box after each guess
 buttonGuess.addEventListener ("click", function(e) {
