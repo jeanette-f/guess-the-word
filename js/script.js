@@ -7,7 +7,7 @@ const countdown = document.querySelector (".remaining span");
 const message = document.querySelector (".message");
 const buttonPlayAgain = document.querySelector (".play-again");
 let word = "magnolia";
-const allGuesses = [];
+let allGuesses = [];
 let remainingGuesses = 8;
 
 // to fetch random new word
@@ -118,7 +118,8 @@ const guessesLeft = function(guess) {
     }
 
     if (remainingGuesses === 0) {
-        remainingGuessesElement.innerText = `Sorry, you've used all your guesses. The word was ${word}.`;
+        message.innerText = `Sorry, you've used all your guesses. The word was "${word}".`;
+        startOver();
     } else if (remainingGuesses === 1) {
         remainingGuessesElement.innerText = 'You have 1 guess remaining!';
     } else {
@@ -131,5 +132,27 @@ const checkForWinner = function () {
     if ( word.toUpperCase() === currentWord.innerText) {
     message.classList.add ("win"); 
     message.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+    startOver();
     }
 };
+
+// add a play again option
+const startOver = function() {
+    buttonGuess.classList.add ("hide");
+    remainingGuessesElement.classList.add ("hide");
+    guessedLettersElement.classList.add ("hide");
+    buttonPlayAgain.classList.remove ("hide");
+};
+// reset game when Play Again is clicked
+buttonPlayAgain.addEventListener ("click", function() {
+    message.classList.remove ("win");
+    guessedLettersElement.innerHTML = "";
+    message.innerText = "";
+    remainingGuesses = 8;
+    allGuesses = [];
+    guessedLettersElement.classList.remove ("hide");
+    remainingGuessesElement.classList.remove ("hide");
+    buttonGuess.classList.remove ("hide");
+    buttonPlayAgain.classList.add ("hide");
+    getWord();
+});
