@@ -8,6 +8,7 @@ const message = document.querySelector (".message");
 const buttonPlayAgain = document.querySelector (".play-again");
 const word = "magnolia";
 const allGuesses = [];
+let remainingGuesses = 8;
 
 // placeholder for mystery word
 const placeholder = function (word) {
@@ -59,6 +60,7 @@ const makeGuess = function (guess) {
         allGuesses.push(guess);
         console.log(allGuesses);
         showGuessedLetters();
+        guessesLeft(guess);
         updateWordInProgress(allGuesses);
     }
 };
@@ -86,6 +88,26 @@ const updateWordInProgress = function (allGuesses) {
     }
     currentWord.innerText = revealWord.join("");   
     checkForWinner();
+};
+
+// to countdown remaining guesses
+const guessesLeft = function(guess) {
+    const wordUpper = word.toUpperCase();
+    if (wordUpper.includes(guess)) {
+        message.innerText = "Yes! That's a correct letter!";
+    } else {
+        message.innerText = "Sorry, that letter is not in the word.";
+        remainingGuesses -= 1;
+        console.log(remainingGuesses);
+    }
+
+    if (remainingGuesses === 0) {
+        remainingGuessesElement.innerText = `Sorry, you've used all your guesses. The word was ${word}.`;
+    } else if (remainingGuesses === 1) {
+        remainingGuessesElement.innerText = 'You have 1 guess remaining!';
+    } else {
+        countdown.innerText = ` ${remainingGuesses} `;
+    }
 };
 
 //  check if player won
