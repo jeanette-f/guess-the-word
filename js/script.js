@@ -150,6 +150,7 @@ buttonPlayAgain.addEventListener ("click", function() {
     message.innerText = "";
     remainingGuesses = 8;
     allGuesses = [];
+    remainingGuessesElement.innerText = `You have ${remainingGuesses} guesses remaining`; 
     guessedLettersElement.classList.remove ("hide");
     remainingGuessesElement.classList.remove ("hide");
     buttonGuess.classList.remove ("hide");
